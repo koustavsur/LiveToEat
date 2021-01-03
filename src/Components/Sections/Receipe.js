@@ -289,18 +289,9 @@ class Receipe extends Component {
                         <ul className='receipe-list'>
                                         {
                                             sections.map(section => {
-                                                return(section.components.map( (comp, index)=>{
-                                                    if(comp.raw_text.toString() !== "n/a")
-                                                    {
-                                                        return(
-                                                            <li key ={index}>
-                                                                {comp.raw_text}
-                                                            </li>
-                                                        )
-                                                    }
-                                                })
-                                            )}
-                                        )
+                                                return(section.components.filter(comp => comp.raw_text.toString() !== "n/a")
+                                                .map((comp, index) => <li key ={index}>{comp.raw_text}</li>))
+                                            })
                                         }
                         </ul>
                     </div>
