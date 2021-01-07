@@ -6,6 +6,7 @@ import { Grid, Button } from '@material-ui/core';
 import CardsList from './CardsList';
 import Error from './Error';
 import ReactGa  from 'react-ga';
+import {CheckForReLoad} from '../utils/util'
 
 
 class Desserts extends Component {
@@ -17,16 +18,15 @@ class Desserts extends Component {
     }
 
     componentDidMount(){
-        console.log("Inside Dessert component did mount")
         ReactGa.initialize('UA-168738867-1')
         ReactGa.pageview(window.location.pathname)
+        CheckForReLoad()
         let receipeState = null
         if(localStorage.getItem('Receipestate')){
             receipeState = JSON.parse(localStorage.getItem('Receipestate'))
         }
         if(receipeState === null || receipeState.dessert.data === null || receipeState.dessert.data === false){
             if(this.props.state.dessert.data === null || this.props.state.dessert.data === false){
-                console.log("Call dessert API")
                 this.props.getDessertList(0,20);
             } 
         }
@@ -46,7 +46,6 @@ class Desserts extends Component {
     render() {
         let receipes = []
         let showLoading = false
-        console.log(this.props.state)
         const {isLoading, error, data} = this.props.state.dessert
         let canRender = false
         let errorPage = false
@@ -115,7 +114,6 @@ class Desserts extends Component {
         if(isLoading !== null && isLoading === true){
             showLoading = true;
         }
-        console.log(this.props.state)
         const parent = "dessert"
         return (
         <div style={{marginTop: '70px'}}>
@@ -155,7 +153,6 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-    console.log("Inside Dessert matchDispatchToProps")
     return {
         getDessertList: getDessertFunc(dispatch)
     }

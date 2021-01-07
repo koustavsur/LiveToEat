@@ -57,7 +57,6 @@ const getAppetizer = async (dispatch, from, to) => {
         if(response.ok)
         {
             let result= await response.json();
-            console.log(result);
             result.results.map(res => {
                 if(res.hasOwnProperty("recipes")){
                     return (res.recipes.map(item => recipes.push(item)))
@@ -83,7 +82,6 @@ const getBreak = async (dispatch, from, to) => {
         if(response.ok)
         {
             let result= await response.json();
-            console.log(result);
             result.results.map(res => {
                 if(res.hasOwnProperty("recipes")){
                     return(res.recipes.map(item => recipes.push(item)))
@@ -108,7 +106,6 @@ const getlunch = async (dispatch, from, to) => {
         let recipes = [];
         if(response.ok)
         {
-            console.log("Inside Lunch action success");
             let result= await response.json();
             result.results.map(res => {
                 if(res.hasOwnProperty("recipes")){
@@ -161,7 +158,6 @@ const getdessert = async (dispatch, from, to) => {
         if(response.ok)
         {
             let result= await response.json();
-            console.log(result);
             result.results.map(res => {
                 if(res.hasOwnProperty("recipes")){
                     return (res.recipes.map(item => recipes.push(item)))

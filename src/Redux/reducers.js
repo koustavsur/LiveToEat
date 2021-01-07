@@ -38,11 +38,8 @@ import {
 } from "./constants";
 
 const reducer = (state =  null, action) => {
-    console.log("Inside reducer")
     switch (action.type) {
         case GET_APPETIZERS_REQUEST:{
-            console.log("Inside request")
-            console.log(state)
             let appData = state.appetizer.data 
             return {
                 ...state,
@@ -54,8 +51,6 @@ const reducer = (state =  null, action) => {
             }
         }
         case GET_APPETIZERS_SUCCESS:{
-            console.log("Inside success")
-            console.log(state)
             let appData = state.appetizer.data 
             if(appData !== null){
                 appData = [...appData, ...action.payload]
@@ -73,7 +68,6 @@ const reducer = (state =  null, action) => {
             }
         }
         case GET_APPETIZERS_FAIL:
-            console.log("Inside failure")
             return {
                 ...state,
                 appetizer: {
@@ -83,8 +77,6 @@ const reducer = (state =  null, action) => {
                 }
             }
         case GET_BREAKFAST_REQUEST:{
-            console.log("Inside breakfast request")
-            console.log(state)
             let appData = state.breakfast.data
             return {
                 ...state,
@@ -96,8 +88,6 @@ const reducer = (state =  null, action) => {
             }
         }
         case GET_BREAKFAST_SUCCESS:{
-            console.log("Inside breakfast success")
-            console.log(state)
             let appData = state.breakfast.data 
             if(appData !== null){
                 appData = [...appData, ...action.payload]
@@ -115,7 +105,6 @@ const reducer = (state =  null, action) => {
             }
         }
         case GET_BREAKFAST_FAIL:
-            console.log("Inside breakfast failure")
             return {
                 ...state,
                 breakfast: {
@@ -136,7 +125,6 @@ const reducer = (state =  null, action) => {
             }
         }
         case GET_LUNCH_SUCCESS:{
-            console.log("Inside lunch success")
             let appData = state.lunch.data 
             if(appData !== null){
                 appData = [...appData, ...action.payload]
@@ -174,7 +162,6 @@ const reducer = (state =  null, action) => {
             }
         }
         case GET_DINNER_SUCCESS:{
-            console.log("Inside dinner success")
             let appData = state.dinner.data 
             if(appData !== null){
                 appData = [...appData, ...action.payload]
@@ -212,7 +199,6 @@ const reducer = (state =  null, action) => {
             }
         }
         case GET_DESSERT_SUCCESS:{
-            console.log("Inside dessert success")
             let appData = state.dessert.data 
             if(appData !== null){
                 appData = [...appData, ...action.payload]
@@ -250,7 +236,6 @@ const reducer = (state =  null, action) => {
             }
         }
         case GET_INDIAN_SUCCESS:{
-            console.log("Inside indian success")
             let appData = state.indian.data 
             if(appData !== null){
                 appData = [...appData, ...action.payload]

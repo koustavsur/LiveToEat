@@ -198,11 +198,12 @@
     display: grid;
     height: 100vh;
     grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: 1fr 1fr 2fr;
+    grid-template-rows: 1fr 1fr 2fr 1fr;
     grid-template-areas: 
     "videoPlayer ingredients"
     "videoPlayer instructions"
-    "nutritionalFact instructions";
+    "nutritionalFact instructions"
+    "saveButton instructions";
     grid-gap: 0.5rem;
     line-height: 1.5;
     letter-spacing: '1.5px';
@@ -226,16 +227,23 @@
 .instructions{
     grid-area: instructions;
 }
+.saveButton{
+    grid-area: saveButton;
+    padding: 15px;
+    padding-bottom: 50px;
+}
+
 
 @media only screen and  (max-width: 740px) {
     .container{
         grid-template-columns: 1fr;
-        grid-template-rows: 2fr 1fr 1fr 2fr;
+        grid-template-rows: 2fr 1fr 1fr 2fr 1fr;
         grid-template-areas: 
         "videoPlayer" 
         "nutritionalFact"
         "ingredients"
-        "instructions";
+        "instructions"
+        "saveButton";
         height: 200vh;
     }
     .nutritionalFact{
@@ -287,7 +295,7 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    padding: 150px 20px 0px;
+    padding: 150px 0px 0px;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 

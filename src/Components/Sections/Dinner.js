@@ -6,6 +6,7 @@ import { Grid, Button } from '@material-ui/core';
 import CardsList from './CardsList';
 import Error from './Error';
 import ReactGa  from 'react-ga';
+import {CheckForReLoad} from '../utils/util'
 
 
 class Dinner extends Component {
@@ -19,14 +20,13 @@ class Dinner extends Component {
     componentDidMount(){
         ReactGa.initialize('UA-168738867-1')
         ReactGa.pageview(window.location.pathname)
-
+        CheckForReLoad()
         let receipeState = null
         if(localStorage.getItem('Receipestate')){
             receipeState = JSON.parse(localStorage.getItem('Receipestate'))
         }
         if(receipeState === null || receipeState.dinner.data === null || receipeState.dinner.data === false){
             if(this.props.state.dinner.data == null){
-                console.log("Call dinner API")
                 this.props.getDinnerList(0,20);
             }
         }
@@ -46,7 +46,6 @@ class Dinner extends Component {
     render() {
         let receipes = []
         let showLoading = false
-        console.log(this.props.state)
         const {isLoading, error, data} = this.props.state.dinner
         let canRender = false
         let errorPage = false
@@ -115,7 +114,6 @@ class Dinner extends Component {
         if(isLoading !== null && isLoading === true){
             showLoading = true;
         }
-        console.log(this.props.state)
         const parent = "dinner"
         return (
             <div style={{marginTop: '70px'}}>
@@ -155,7 +153,6 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => {
-    console.log("Inside dinner matchDispatchToProps")
     return {
         getDinnerList: getDinnerFunc(dispatch)
     }

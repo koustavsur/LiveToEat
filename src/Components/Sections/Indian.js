@@ -35,7 +35,6 @@ class Indian extends Component {
         }
         if(receipeState === null || receipeState.indian.data === null || receipeState.indian.data === false){
             if(this.props.state.indian.data === null || this.props.state.indian.data === false){
-                console.log("Call indian API")
                 this.props.getIndianList(0,20);
             }
         }      
@@ -57,7 +56,6 @@ class Indian extends Component {
         let receipes = []
         let showLoading = false
         const { classes } = this.props;
-        console.log(this.props.state)
         const {isLoading, error, data} = this.props.state.indian
         let canRender = false
         let errorPage = false
@@ -165,7 +163,6 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-    console.log("Inside matchDispatchToProps")
     return {
         getIndianList: getIndianFunc(dispatch)
     }

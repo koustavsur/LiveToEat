@@ -25,7 +25,6 @@ class Italian extends Component {
         }
         if(receipeState === null || receipeState.italian.data === null || receipeState.italian.data === false){
             if(this.props.state.italian.data == null || this.props.state.italian.data === false){
-                console.log("Call Italian API")
                 this.props.getItalianList(0,20);
             }
         }      
@@ -47,7 +46,6 @@ class Italian extends Component {
     render() {
         let receipes = []
         let showLoading = false
-        console.log(this.props.state)
         const {isLoading, error, data} = this.props.state.italian
         let canRender = false
         let errorPage = false
@@ -155,7 +153,6 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-    console.log("Inside matchDispatchToProps")
     return {
         getItalianList: getItalianFunc(dispatch)
     }

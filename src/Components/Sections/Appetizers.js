@@ -6,7 +6,7 @@ import { Grid, Button } from '@material-ui/core';
 import CardsList from './CardsList';
 import Error from './Error';
 import ReactGa  from 'react-ga';
-
+import {CheckForReLoad} from '../utils/util'
 
 class Appetizers extends Component {
     constructor(props) {
@@ -19,13 +19,13 @@ class Appetizers extends Component {
     componentDidMount =async () => {
         ReactGa.initialize('UA-168738867-1')
         ReactGa.pageview(window.location.pathname)
+        CheckForReLoad()
         let receipeState = null
         if(localStorage.getItem('Receipestate')){
             receipeState = JSON.parse(localStorage.getItem('Receipestate'))
         }
         if(receipeState === null || receipeState.appetizer.data === null || receipeState.appetizer.data === false){
             if(this.props.state.appetizer.data === null || this.props.state.appetizer.data === false){
-                console.log("Call appetizers API")
                 this.props.getAppetizerList(0,20);
             }  
         }    
@@ -45,7 +45,6 @@ class Appetizers extends Component {
     render() {
         let receipes = []
         let showLoading = false
-        console.log(this.props.state)
         const {isLoading, error, data} = this.props.state.appetizer
         let canRender = false
         let errorPage = false
@@ -154,7 +153,6 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-    console.log("Inside matchDispatchToProps")
     return {
         getAppetizerList: getAppetizersFunc(dispatch)
     }

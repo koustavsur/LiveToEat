@@ -25,7 +25,6 @@ class Chinese extends Component {
         }
         if(receipeState === null || receipeState.chinese.data === null || receipeState.chinese.data === false){
             if(this.props.state.chinese.data === null || this.props.state.chinese.data === false){
-                console.log("Call Chinese API")
                 this.props.getChineseList(0,20);
             }
         }      
@@ -154,7 +153,6 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-    console.log("Inside matchDispatchToProps")
     return {
         getChineseList: getChineseFunc(dispatch)
     }

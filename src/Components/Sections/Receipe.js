@@ -3,8 +3,10 @@ import { CircularProgress } from '@material-ui/core'
 import ReactPlayer from 'react-player'
 import {connect} from 'react-redux';
 import '../Styles/gStyle.css'
-import { getReceipeByIdFunc } from '../../Redux/actions';
+import { getReceipeByIdFunc } from '../../Redux/actions'
 import ReactGa from 'react-ga'
+import Button from '@material-ui/core/Button'
+import { jsPDF } from "jspdf";
 
 class Receipe extends Component {
 
@@ -17,11 +19,26 @@ class Receipe extends Component {
             action:`${receipe}`
         })
     }
+
+    handleOnSaveReceipeClick = receipeName => {
+        let pdf = new jsPDF('p', 'pt', 'a4');
+
+        let ingredient = document.getElementById("ingredients").innerText;
+        let instruction = document.getElementById("instructions").innerText;
+        let currentAddress = window.location.href;
+        let source =`Receipe: ${receipeName} \n\n ${ingredient} \n\n ${instruction} \n\n Reference: ${currentAddress}` 
+        if(source !== null)
+        {     
+            pdf.setFontSize(13);      
+            var splitTitle = pdf.splitTextToSize(source, 500);
+            pdf.text(15, 20, splitTitle); 
+            pdf.save(`${receipeName}.pdf`)
+        }
+    }
+
     render() {
         let show = null
         const {match: {params: {receipe}}} = this.props
-        console.log(this.props)
-        console.log(this.props.state)
         let type = receipe.split("-")
         switch (type[1]) {
             case "appetizers":
@@ -195,12 +212,9 @@ class Receipe extends Component {
             default:
                 break;
         }
-        console.log(show)
         if(show !== null && Array.isArray(show)){
             show = show[0]
         }
-        console.log(show)
-        console.log(this.props.state)
         const {isLoading, error, data} = this.props.state.receipeById
         let canRender = false
         let errorPage = false
@@ -213,7 +227,6 @@ class Receipe extends Component {
         let instructions = null
         let sections = null
         if(show !== null){
-            console.log(show)
             canRender = true
             name = show.name
             original_video_url = show.original_video_url
@@ -222,7 +235,6 @@ class Receipe extends Component {
         }else if(data !== null && data !== false){
             canRender = true
             show = data
-            console.log(show)
             name = show.name
             original_video_url = show.original_video_url
             instructions = show.instructions
@@ -255,7 +267,6 @@ class Receipe extends Component {
         let sugar = 0
         if(show !== null && show.hasOwnProperty("nutrition")){
             const { nutrition } =show
-            console.log(nutrition)
             cal = nutrition.hasOwnProperty("calories") ? nutrition.calories : cal;
             carb = nutrition.hasOwnProperty("carbohydrates") ? nutrition.carbohydrates : carb;
             fat = nutrition.hasOwnProperty("fat") ? nutrition.fat : fat;
@@ -268,7 +279,7 @@ class Receipe extends Component {
             <div style={{marginTop:'100px'}}>
                 {showLoading && <CircularProgress color="secondary"/>}
                 {canRender && 
-                <div className='container'>
+                <div className='container' id="ReceipePage">
                     <div className='videoPlayer'>
                         <ReactPlayer width='80%' height='70%' url={original_video_url} controls />
                         <div className='receipe-name'>{name}</div>
@@ -284,7 +295,7 @@ class Receipe extends Component {
                             {<li key={sugar}>Sugar: {sugar > 0 ? sugar + " mg" :  "N/A"}</li>}
                         </ul>
                     </div>
-                    <div className='ingredients'>
+                    <div className='ingredients' id='ingredients'>
                         <div className='receipe-title'>Ingredients: </div>
                         <ul className='receipe-list'>
                                         {
@@ -295,17 +306,22 @@ class Receipe extends Component {
                                         }
                         </ul>
                     </div>
-                    <div className='instructions'>
-                    <div className='receipe-title'>Instructions : </div>
-                    <ul className='receipe-list'>
-                        {instructions.map(instruction => {
-                            return(
-                                <li key={instruction.display_text}>
-                                    {instruction.display_text}
-                                </li>
-                            )
-                        })}
-                    </ul>
+                    <div className='instructions' id='instructions'>
+                        <div className='receipe-title'>Instructions : </div>
+                            <ul className='receipe-list'>
+                                {instructions.map(instruction => {
+                                    return(
+                                        <li key={instruction.display_text}>
+                                            {instruction.display_text}
+                                        </li>
+                                    )
+                                })}
+                            </ul>
+                    </div>
+                    <div className="saveButton">
+                        <Button className="saveReceipeButton" size="medium" variant="contained" color="secondary" onClick={() => this.handleOnSaveReceipeClick(name)}>
+                            Save Receipe
+                        </Button>
                     </div>
                 </div>}
                 {errorPage && 'Error 404'}
@@ -321,7 +337,6 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-    console.log("Inside matchDispatchToProps")
     return {
         getReceipeById: getReceipeByIdFunc(dispatch)
     }
